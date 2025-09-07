@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+@layer base {
+  * {
+    @apply border-gray-200; /* Standard TailwindCSS border */
+  }
+  body {
+    @apply bg-gray-50 text-gray-900; /* Standard colors */
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  
+  .btn-primary {
+    @apply bg-blue-500 text-white hover:bg-blue-600;
+  }
+  
+  .card {
+    @apply rounded-lg border bg-white text-gray-900 shadow-sm;
+  }
+}

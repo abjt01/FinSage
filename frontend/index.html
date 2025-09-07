@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinSage AI - Your Financial Assistant</title>
+    <meta name="description" content="AI-powered financial advisor for achieving your goals through smart SIP optimization and Monte Carlo simulations." />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Meta tags for PWA -->
+    <meta name="theme-color" content="#3b82f6" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="FinSage AI" />
+    
+    <!-- Open Graph tags -->
+    <meta property="og:title" content="FinSage AI - Your Financial Assistant" />
+    <meta property="og:description" content="Transform your financial chaos into clarity with AI-powered insights" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-image.png" />
+    
+    <style>
+      /* Loading spinner styles */
+      .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(59, 130, 246, 0.3);
+        border-radius: 50%;
+        border-top-color: #3b82f6;
+        animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      /* App loading state */
+      #app-loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        color: white;
+      }
+      
+      .logo-animation {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        opacity: 0;
+        animation: fadeInUp 1s ease-out forwards;
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 font-sans antialiased">
+    <!-- App loading screen -->
+    <div id="app-loading">
+      <div class="logo-animation">🪙 FinSage AI</div>
+      <div class="loading-spinner"></div>
+      <p class="mt-4 text-lg opacity-80">Loading your financial insights...</p>
+    </div>
+    
+    <div id="root"></div>
+    
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <script>
+      // Hide loading screen when app is ready
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const loading = document.getElementById('app-loading');
+          if (loading) {
+            loading.style.opacity = '0';
+            loading.style.transition = 'opacity 0.5s ease-out';
+            setTimeout(() => loading.remove(), 500);
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
