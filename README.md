@@ -6,7 +6,6 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green.svg)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/React-18+-blue.svg)](https://reactjs.org)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 FinSage is a conversational AI finance coach that unifies personal finance data, runs smart simulations, and gives actionable steps to reach goals—so the question “Will I make it, and what must I change today?” is answered with clarity. [1][12][19]
 
