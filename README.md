@@ -46,6 +46,8 @@ Example:
 
 ## 🏗️ System Architecture
 
+```
+
 FinSage/
 ├── frontend/          # React + Tailwind UI, charts, and client logic
 ├── backend/           # Node.js API Gateway (auth, routing, orchestration)
@@ -54,30 +56,38 @@ FinSage/
 ├── database/          # PostgreSQL + MongoDB persistence layer
 └── docs/              # Guides, API specs, and developer notes
 
-### High-Level Data Flow
- [ User ]
-    │
-    ▼
-[ Frontend (React + Tailwind) ]
-    │  HTTP/REST, WebSocket
-    ▼
-[ Backend (Node.js API Gateway) ]
-    │
-    ├── Authentication & Authorization (JWT, bcrypt)
-    ├── Database Layer (PostgreSQL + MongoDB)
-    └── Service Routing
-           │
-           ▼
-     [ AI Service (FastAPI) ]
-           │
-           ├── LangChain Orchestration
-           ├── Gemini LLM (NLP & reasoning)
-           ├── Simulation Engine (NumPy / Pandas)
-           └── Export Module (CSV, JSON, PDF)
+```
 
-     [ Fi MCP Integration ]
-           │
-           └── Real-time account & portfolio sync
+### High-Level Data Flow
+```
+
+\[ User ]
+│
+▼
+\[ Frontend (React + Tailwind) ]
+│  HTTP/REST, WebSocket
+▼
+\[ Backend (Node.js API Gateway) ]
+│
+├── Authentication & Authorization (JWT, bcrypt)
+├── Database Layer (PostgreSQL + MongoDB)
+└── Service Routing
+│
+▼
+\[ AI Service (FastAPI) ]
+│
+├── LangChain Orchestration
+├── Gemini LLM (NLP & reasoning)
+├── Simulation Engine (NumPy / Pandas)
+└── Export Module (CSV, JSON, PDF)
+
+```
+ [ Fi MCP Integration ]
+       │
+       └── Real-time account & portfolio sync
+```
+
+````
 
 ---
 
@@ -113,53 +123,82 @@ FinSage/
 
 ## 🚀 Quick Start
 
-### 1\. Prerequisites
+### 1. Prerequisites
+- **Python 3.10+**
+- **Node.js 18+**
+- **PostgreSQL 14+**
+- **Git**
 
-*   **Python 3.10+**
-    
-*   **Node.js 18+**
-    
-*   **PostgreSQL 14+**
-    
-*   **Git**
-    
+### 2. Clone Repository
+```bash
+git clone https://github.com/abjt01/FinSage.git
+cd FinSage
+````
 
-### 2\. Clone Repository
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   git clone https://github.com/abjt01/FinSage.git  cd FinSage   `
-
-### 3\. Environment Setup
+### 3. Environment Setup
 
 Copy and configure environment variables:
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   cp .env.example .env  # Edit with your API keys and database credentials   `
+```bash
+cp .env.example .env
+# Edit with your API keys and database credentials
+```
 
-### 4\. Install Dependencies
+### 4. Install Dependencies
 
 #### Backend
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   cd backend  npm install   `
+```bash
+cd backend
+npm install
+```
 
 #### Frontend
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   cd ../frontend  npm install   `
+```bash
+cd ../frontend
+npm install
+```
 
 #### AI Service
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   cd ../ai-service  python -m venv venv  source venv/bin/activate    # Windows: venv\Scripts\activate  pip install -r requirements.txt   `
+```bash
+cd ../ai-service
+python -m venv venv
+source venv/bin/activate    # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-### 5\. Start Services
+### 5. Start Services
 
-Run each service in a separate terminal:
+Run each service in a separate terminal.
 
 **Backend (API Gateway):**
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   cd backend  npm run dev   `
+```bash
+cd backend
+npm run dev
+```
 
 **AI Service (FastAPI):**
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   cd ai-service/src  uvicorn main:app --reload --port 8001   `
+```bash
+cd ai-service/src
+uvicorn main:app --reload --port 8001
+```
 
 **Frontend (React):**
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   cd frontend  npm run dev   `
+```bash
+cd frontend
+npm run dev
+```
+
+---
+
+**Built with ❤️ for better financial planning**
+*Transform your financial chaos into clarity with AI-powered insights.*
+
+```
+
+---
