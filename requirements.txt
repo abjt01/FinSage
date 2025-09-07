@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+langchain
+google-generativeai
+pydantic
+numpy
+pandas
+scikit-learn
+plotly
+matplotlib
+python-multipart
+aiohttp
+requests
+boto3
+minio
+python-dotenv
