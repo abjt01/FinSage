@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Menu, Bell, User, LogOut, Settings } from 'lucide-react'
-import { useAuth } from '../../hooks/useAuth'
+import { useAuth } from '../../context/AuthContext'
 import { useApp } from '../../context/AppContext'
 import { formatCurrency } from '../../utils/formatters'
 

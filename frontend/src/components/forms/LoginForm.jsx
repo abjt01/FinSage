@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useAuth } from '../../hooks/useAuth'
+import { useAuth } from '../context/AuthContext'
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
 import LoadingSpinner from '../common/LoadingSpinner'
 

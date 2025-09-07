@@ -31,9 +31,12 @@ export const AuthProvider = ({ children }) => {
         setUser(currentUser)
       } else {
         console.log('❌ User not authenticated')
+        setUser(null) // ✅ IMPORTANT: Set to null explicitly
       }
     } catch (error) {
       console.error('💥 Auth initialization failed:', error)
+      setUser(null) // ✅ IMPORTANT: Set to null on error
+      // Don't clear token here, let it retry
     } finally {
       console.log('✅ Setting loading to false')
       setLoading(false)
@@ -47,18 +50,20 @@ export const AuthProvider = ({ children }) => {
       setError(null)
 
       console.log('📞 Calling authService.login...')
-      const { user: loggedInUser, token } = await authService.login(email, password)
-
-      console.log('✅ Login successful:', loggedInUser)
-      console.log('🎫 Token received:', !!token)
-
+      const response = await authService.login(email, password)
+      
+      console.log('✅ Login successful:', response)
+      
+      // ✅ CRITICAL FIX: Properly extract user from response
+      const loggedInUser = response.user
+      console.log('👤 Setting user in context:', loggedInUser)
       setUser(loggedInUser)
-      console.log('👤 User state updated in context')
-
-      return { user: loggedInUser, token }
+      
+      return response
     } catch (error) {
       console.error('❌ Login failed:', error)
       setError(error.message)
+      setUser(null) // ✅ Ensure user is null on login failure
       throw error
     } finally {
       setLoading(false)
@@ -68,12 +73,14 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
+      console.log('🔄 Logging out...')
       await authService.logout()
     } catch (error) {
       console.error('Logout error:', error)
     } finally {
       setUser(null)
       setError(null)
+      console.log('✅ User logged out')
     }
   }
 
@@ -86,8 +93,10 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     clearError,
-    isAuthenticated: !!user
+    isAuthenticated: !!user // ✅ Simple boolean check
   }
+
+  console.log('🎯 AuthContext current state:', { user: !!user, loading, isAuthenticated: !!user })
 
   return (
     <AuthContext.Provider value={value}>

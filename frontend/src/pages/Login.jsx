@@ -1,42 +1,50 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../context/AuthContext'
 import { Eye, EyeOff, User, Lock } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
-    email: 'arjun@demo.in', // Pre-filled for demo
+    email: 'arjun@demo.in',
     password: 'demo123'
   })
-  const [loading, setLoading] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
   
   const { login } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setLoading(true)
+    
+    if (submitting) return // Prevent double submission
+    
+    setSubmitting(true)
     
     try {
+      console.log('🔄 Form submit - login attempt')
       await login(formData.email, formData.password)
       toast.success('Welcome to FinSage AI!')
+      console.log('✅ Login successful, user should be set')
     } catch (error) {
+      console.error('❌ Login form error:', error)
       toast.error(error.message || 'Login failed')
     } finally {
-      setLoading(false)
+      setSubmitting(false)
     }
   }
 
   const handleDemoLogin = async () => {
-    setLoading(true)
+    if (submitting) return
+    
+    setSubmitting(true)
     try {
       await login('arjun@demo.in', 'demo123')
       toast.success('Demo login successful!')
     } catch (error) {
       toast.error('Demo login failed')
     } finally {
-      setLoading(false)
+      setSubmitting(false)
     }
   }
 
@@ -91,6 +99,7 @@ const Login = () => {
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                 placeholder="Enter your email"
                 required
+                disabled={submitting}
               />
             </div>
           </div>
@@ -109,11 +118,13 @@ const Login = () => {
                 className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                 placeholder="Enter your password"
                 required
+                disabled={submitting}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                disabled={submitting}
               >
                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
@@ -122,13 +133,13 @@ const Login = () => {
 
           {/* Submit Button */}
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={!submitting ? { scale: 1.02 } : {}}
+            whileTap={!submitting ? { scale: 0.98 } : {}}
             type="submit"
-            disabled={loading}
+            disabled={submitting}
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? (
+            {submitting ? (
               <div className="flex items-center justify-center space-x-2">
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                 <span>Signing in...</span>
@@ -151,11 +162,11 @@ const Login = () => {
           </div>
           
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={!submitting ? { scale: 1.02 } : {}}
+            whileTap={!submitting ? { scale: 0.98 } : {}}
             onClick={handleDemoLogin}
-            disabled={loading}
-            className="w-full mt-4 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-4 rounded-lg font-medium transition-all duration-200 border border-gray-300"
+            disabled={submitting}
+            className="w-full mt-4 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-4 rounded-lg font-medium transition-all duration-200 border border-gray-300 disabled:opacity-50"
           >
             🚀 Try Demo (Arjun, 29)
           </motion.button>

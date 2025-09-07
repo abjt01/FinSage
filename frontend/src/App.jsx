@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { useAuth } from './hooks/useAuth'
+import { useAuth } from './context/AuthContext'
 import ErrorBoundary from './components/common/ErrorBoundary'
 import LoadingSpinner from './components/common/LoadingSpinner'
 import Header from './components/common/Header'
@@ -16,30 +16,24 @@ import Reports from './pages/Reports'
 function App() {
   const { user, loading } = useAuth()
 
-  console.log('🎯 APP RENDER - User:', user, 'Loading:', loading) // Critical debug line
+  console.log('🎯 App render - User:', !!user, 'Loading:', loading)
 
   if (loading) {
-    console.log('⏳ App showing loading spinner')
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <LoadingSpinner size="large" />
+        <LoadingSpinner size="large" text="Loading FinSage AI..." />
       </div>
     )
   }
 
   if (!user) {
-    console.log('❌ No user, showing login')
     return (
       <ErrorBoundary>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
+        <Login />
       </ErrorBoundary>
     )
   }
 
-  console.log('✅ User exists, showing dashboard')
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-gray-50">

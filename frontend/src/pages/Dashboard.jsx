@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, Target, DollarSign, Brain, MessageCircle, Download } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
+
 import { useQuery } from 'react-query'
 import Plot from 'react-plotly.js'
 import toast from 'react-hot-toast'

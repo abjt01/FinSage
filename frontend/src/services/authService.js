@@ -1,77 +1,90 @@
-// src/services/authService.js
 import api from './api'
 import { API_ENDPOINTS } from '../utils/constants'
 
 class AuthService {
   async login(email, password) {
-    console.log('🌐 Making API call to login endpoint...')
-
+    console.log('🌐 API login call...')
+    
     try {
       const response = await api.post(API_ENDPOINTS.auth.login, {
         email,
-        password,
+        password
       })
 
-      console.log('📨 Login API response:', response.data)
+      console.log('📨 Raw API response:', response.data)
 
-      const { token, user } = response.data
+      const data = response.data
+      
+      // Handle different response structures
+      let user, token
+      
+      if (data.success && data.user && data.token) {
+        user = data.user
+        token = data.token
+      } else if (data.user && data.token) {
+        user = data.user
+        token = data.token
+      } else {
+        throw new Error('Invalid login response structure')
+      }
 
-      // Store token in localStorage
+      // Store token
       localStorage.setItem('token', token)
+      console.log('💾 Token stored')
 
       return { user, token }
+      
     } catch (error) {
-      console.error('🚨 Login API error:', error.response?.data || error.message)
-      throw new Error(error.response?.data?.message || 'Login failed')
-    }
-  }
-
-  async logout() {
-    console.log('🔒 Logging out...')
-    try {
-      await api.post(API_ENDPOINTS.auth.logout)
-      console.log('✅ Logout API call successful')
-    } catch (error) {
-      // Even if logout API fails, clear local storage
-      console.error('❌ Logout API failed:', error)
-    } finally {
+      console.error('🚨 Login API error:', error)
+      
+      // Clean up on error
       localStorage.removeItem('token')
-      console.log('🧹 Token removed from localStorage')
+      
+      const message = error.response?.data?.message || 
+                     error.response?.data?.error ||
+                     error.message ||
+                     'Login failed'
+      
+      throw new Error(message)
     }
   }
 
   async getCurrentUser() {
-    console.log('👤 Fetching current user...')
+    console.log('👤 Getting current user...')
+    
     try {
       const response = await api.get(API_ENDPOINTS.auth.me)
-      console.log('👤 Current user fetched:', response.data.user)
-      return response.data.user
+      const user = response.data.user || response.data
+      
+      console.log('👤 Current user:', user.email)
+      return user
+      
     } catch (error) {
-      console.error('❌ Failed to get current user:', error)
-      throw new Error('Failed to get current user')
+      console.error('❌ Get user failed:', error)
+      localStorage.removeItem('token')
+      throw error
     }
+  }
+
+  async logout() {
+    try {
+      await api.post(API_ENDPOINTS.auth.logout)
+    } catch (error) {
+      console.error('Logout API failed:', error)
+    }
+    localStorage.removeItem('token')
   }
 
   isAuthenticated() {
     const token = localStorage.getItem('token')
-    console.log('🔑 Checking authentication, token exists:', !!token)
-
     if (!token) return false
 
     try {
-      // Check if token is expired (basic check)
       const payload = JSON.parse(atob(token.split('.')[1]))
-      const isValid = payload.exp * 1000 > Date.now()
-      console.log('⏰ Token valid:', isValid)
-      return isValid
-    } catch (error) {
-      console.log('💥 Invalid token format')
+      return payload.exp * 1000 > Date.now()
+    } catch {
       return false
     }
-  }
-
-  getToken() {
-    return localStorage.getItem('token')
   }
 }
 
