@@ -5,7 +5,6 @@ google-generativeai
 pydantic
 numpy
 pandas
-scikit-learn
 plotly
 matplotlib
 python-multipart
