@@ -46,37 +46,38 @@ Example:
 
 ## 🏗️ System Architecture
 
-financial-ai-agent/
-├── frontend/ → React + Tailwind, user interface and charts
-├── backend/ → Node.js API Gateway, auth and orchestration
-├── ai-service/ → FastAPI microservice for AI, simulations, exports
-├── mcp-integration/ → Fi MCP connector for financial data
-└── docs/ → Documentation and setup guides
-
-shell
-Copy code
+FinSage/
+├── frontend/          # React + Tailwind UI, charts, and client logic
+├── backend/           # Node.js API Gateway (auth, routing, orchestration)
+├── ai-service/        # FastAPI service (AI, simulations, exports)
+├── mcp-integration/   # Fi MCP connector (bank/investment sync)
+├── database/          # PostgreSQL + MongoDB persistence layer
+└── docs/              # Guides, API specs, and developer notes
 
 ### High-Level Data Flow
-[ User ]
-│
-▼
-[ Frontend (React) ]
-│
-▼
-[ Backend (Node API Gateway) ]
-│
-├── Auth + Validation
-├── Database (PostgreSQL, MongoDB)
-└── Calls → [ AI Service (FastAPI) ]
-│
-├── LangChain orchestration
-├── Gemini LLM integration
-├── Simulation Engine (NumPy, Pandas)
-├── Export Service (CSV, JSON, PDF)
-└── Fi MCP Connector (Bank + Investment data)
+ [ User ]
+    │
+    ▼
+[ Frontend (React + Tailwind) ]
+    │  HTTP/REST, WebSocket
+    ▼
+[ Backend (Node.js API Gateway) ]
+    │
+    ├── Authentication & Authorization (JWT, bcrypt)
+    ├── Database Layer (PostgreSQL + MongoDB)
+    └── Service Routing
+           │
+           ▼
+     [ AI Service (FastAPI) ]
+           │
+           ├── LangChain Orchestration
+           ├── Gemini LLM (NLP & reasoning)
+           ├── Simulation Engine (NumPy / Pandas)
+           └── Export Module (CSV, JSON, PDF)
 
-markdown
-Copy code
+     [ Fi MCP Integration ]
+           │
+           └── Real-time account & portfolio sync
 
 ---
 
@@ -112,118 +113,57 @@ Copy code
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Python 3.10+  
-- Node.js 18+  
-- PostgreSQL 14+  
-- Git  
+1. Prerequisites
 
-### Installation
-```bash
-# Clone the repository
+Python 3.10+
+Node.js 18+
+PostgreSQL 14+
+
+Git
+
+2. Clone Repository
 git clone https://github.com/abjt01/FinSage.git
 cd FinSage
 
-# Copy environment variables
-cp .env.example .env
-# Edit .env with API keys and credentials
+3. Environment Setup
 
-# Backend
+Copy and configure environment variables:
+
+cp .env.example .env
+# Edit with your API keys and database credentials
+
+4. Install Dependencies
+Backend
 cd backend
 npm install
 
-# Frontend
+Frontend
 cd ../frontend
 npm install
 
-# AI Service
+AI Service
 cd ../ai-service
 python -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
+source venv/bin/activate    # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-Run Services
-bash
-Copy code
-# Backend (Terminal 1)
+
+5. Start Services
+
+Run each service in a separate terminal:
+
+Backend (API Gateway):
+
 cd backend
 npm run dev
 
-# AI Service (Terminal 2)
+
+AI Service (FastAPI):
+
 cd ai-service/src
 uvicorn main:app --reload --port 8001
 
-# Frontend (Terminal 3)
+
+Frontend (React):
+
 cd frontend
 npm run dev
-Access the app:
-
-Frontend → http://localhost:5173
-
-Backend API → http://localhost:8000
-
-AI Service → http://localhost:8001
-
-Docs → http://localhost:8001/docs
-
-📊 Demo Usage
-Goal Planning
-
-text
-Copy code
-User: "Can I afford a ₹50L flat in 5 years?"
-FinSage: "At your current ₹12,000/month SIP (12% returns), you’ll accumulate ₹38L.  
-Increase your SIP by ₹6,000/month for an 85% probability of achieving your goal."
-SIP Optimization
-
-text
-Copy code
-User: "How much should I increase my SIP?"
-FinSage: "Increase by ₹6,000/month (to ₹18,000).  
-Your goal probability improves from 65% → 85%."
-📈 Financial Calculations
-SIP Future Value:
-FV = PMT × [((1 + r)^n - 1) / r]
-
-Goal Timeline:
-n = log(1 + (FV × r) / PMT) / log(1 + r)
-
-CAGR:
-CAGR = (Ending / Beginning)^(1/n) - 1
-
-🔧 Configuration
-Sample .env file:
-
-env
-Copy code
-# Database
-DATABASE_URL=postgresql://user:password@localhost:5432/finsage
-MONGODB_URI=mongodb://localhost:27017/finsage
-
-# JWT Authentication
-JWT_SECRET=your-secret
-JWT_EXPIRES_IN=7d
-
-# AI Service
-GEMINI_API_KEY=your-gemini-api-key
-AI_ENGINE_URL=http://localhost:8001
-
-# MCP
-MCP_API_KEY=your-mcp-api-key
-MCP_BASE_URL=https://mcp.fi.money:8080/mcp
-
-# Frontend
-VITE_API_URL=http://localhost:8000
-🧪 Testing
-bash
-Copy code
-# Backend
-cd backend
-npm test
-
-# AI Service
-cd ai-service
-pytest tests/
-
-# Frontend
-cd frontend
-npm test
