@@ -1,0 +1,37 @@
+{
+  "name": "finsage",
+  "version": "1.0.0",
+  "description": "AI-powered financial advisor for goal achievement",
+  "scripts": {
+    "dev": "concurrently \"npm run backend:dev\" \"npm run ai:dev\" \"npm run frontend:dev\"",
+    "frontend:dev": "cd frontend && npm run dev",
+    "backend:dev": "cd backend && npm run dev",
+    "ai:dev": "cd ai && python -m uvicorn main:app --reload --port 8001",
+    "setup": "./scripts/setup.sh",
+    "seed": "cd backend && npm run seed",
+    "test": "npm run test:backend && npm run test:ai && npm run test:frontend",
+    "test:backend": "cd backend && npm test",
+    "test:ai": "cd ai && python -m pytest",
+    "test:frontend": "cd frontend && npm test",
+    "build": "cd frontend && npm run build",
+    "deploy": "./scripts/deploy.sh"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "keywords": [
+    "financial-advisor",
+    "ai",
+    "sip-optimization",
+    "monte-carlo",
+    "langchain",
+    "react",
+    "fastapi",
+    "hackathon"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/finsage.git"
+  }
+}
