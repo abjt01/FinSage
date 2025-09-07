@@ -199,6 +199,4 @@ npm run dev
 **Built with ❤️ for better financial planning**
 *Transform your financial chaos into clarity with AI-powered insights.*
 
-```
-
 ---
