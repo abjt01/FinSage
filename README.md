@@ -1,6 +1,6 @@
 # FinSage 🔥
 
-> One tiny matchstick that lights up your entire financial jungle—FinSage fuses live accounts, AI conversations, and simulations into a blazing torch that shows exactly how to reach every goal. [1]
+> A conversational AI finance coach that unifies your personal finance data, runs smart simulations, and gives you actionable steps to reach your goals.
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green.svg)](https://fastapi.tiangolo.com)
