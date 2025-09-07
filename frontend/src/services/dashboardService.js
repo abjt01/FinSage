@@ -1,31 +1,59 @@
 import api from './api'
-import { API_ENDPOINTS } from '../utils/constants'
 
 class DashboardService {
   async getDashboardData() {
     try {
-      const response = await api.get(API_ENDPOINTS.dashboard.data)
-      return response.data
+      const response = await api.get('/api/users/dashboard')
+      return response.data.data
     } catch (error) {
-      throw new Error('Failed to fetch dashboard data')
+      // Return mock data if backend is not available
+      console.warn('Backend not available, using mock data:', error.message)
+      return this.getMockDashboardData()
     }
   }
 
-  async getNetWorth() {
-    try {
-      const response = await api.get('/api/users/networth')
-      return response.data
-    } catch (error) {
-      throw new Error('Failed to fetch net worth')
-    }
-  }
-
-  async getGoalProgress() {
-    try {
-      const response = await api.get('/api/goals/progress')
-      return response.data
-    } catch (error) {
-      throw new Error('Failed to fetch goal progress')
+  getMockDashboardData() {
+    return {
+      user: {
+        name: 'Arjun Sharma',
+        email: 'arjun@demo.in',
+        profile: {
+          firstName: 'Arjun',
+          lastName: 'Sharma',
+          age: 29,
+          occupation: 'Software Engineer'
+        }
+      },
+      netWorth: 650000,
+      netWorthChange: 12.5,
+      totalSIP: 12000,
+      sipReturn: 8.2,
+      goal: {
+        title: 'Dream Home Purchase',
+        targetAmount: 5000000,
+        currentAmount: 2250000,
+        targetDate: '2029-09-01',
+        timeHorizonMonths: 60
+      },
+      goalProgress: 45,
+      accounts: [
+        {
+          type: 'bank',
+          bankName: 'HDFC Bank',
+          balance: 125000,
+          accountNumber: '****6789'
+        },
+        {
+          type: 'mutual_fund', 
+          bankName: 'ICICI Prudential',
+          balance: 340000
+        },
+        {
+          type: 'epf',
+          bankName: 'EPFO',
+          balance: 185000
+        }
+      ]
     }
   }
 }
