@@ -1,9 +1,22 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    nodePolyfills({
+      // To add only specific polyfills, add them here
+      include: ['buffer'],
+      globals: {
+        Buffer: true,
+        global: true,
+        process: true,
+      },
+      // Whether to polyfill `node:` protocol imports.
+      protocolImports: true,
+    })
+  ],
   server: {
     port: 5173,
     host: true,
@@ -12,6 +25,9 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
+    commonjsOptions: {
+      transformMixedEsModules: true
+    },
     rollupOptions: {
       output: {
         manualChunks: {
@@ -23,6 +39,9 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ['plotly.js', 'react-plotly.js']
+    include: ['plotly.js', 'react-plotly.js', 'buffer']
+  },
+  define: {
+    global: 'globalThis',
   }
 })
