@@ -81,11 +81,11 @@ FinSage/
 ├── Simulation Engine (NumPy / Pandas)
 └── Export Module (CSV, JSON, PDF)
 
-```
+
  [ Fi MCP Integration ]
        │
        └── Real-time account & portfolio sync
-```
+
 
 ````
 
