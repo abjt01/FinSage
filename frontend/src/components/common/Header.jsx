@@ -1,20 +1,23 @@
 import React, { useState } from 'react'
 import { Menu, Bell, User, LogOut, Settings } from 'lucide-react'
-import { useAuth } from '../../context/AuthContext'
 import { useApp } from '../../context/AppContext'
-import { formatCurrency } from '../../utils/formatters'
 
 const Header = () => {
-  const { user, logout } = useAuth()
   const { toggleSidebar, notifications } = useApp()
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
-  const handleLogout = async () => {
-    try {
-      await logout()
-    } catch (error) {
-      console.error('Logout failed:', error)
-    }
+  // Mock user data for demo
+  const mockUser = {
+    profile: {
+      firstName: 'Arjun',
+      lastName: 'Sharma',
+      occupation: 'Software Engineer'
+    },
+    email: 'arjun@demo.in'
+  }
+
+  const handleLogout = () => {
+    console.log('Logout clicked - but bypassing auth')
   }
 
   const getInitials = (firstName, lastName) => {
@@ -62,14 +65,14 @@ const Header = () => {
               className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
               <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                {getInitials(user?.profile?.firstName, user?.profile?.lastName)}
+                {getInitials(mockUser?.profile?.firstName, mockUser?.profile?.lastName)}
               </div>
               <div className="hidden sm:block text-left">
                 <p className="text-sm font-medium text-gray-900">
-                  {user?.profile?.firstName} {user?.profile?.lastName}
+                  {mockUser?.profile?.firstName} {mockUser?.profile?.lastName}
                 </p>
                 <p className="text-xs text-gray-500">
-                  {user?.profile?.occupation || 'User'}
+                  {mockUser?.profile?.occupation || 'User'}
                 </p>
               </div>
             </button>
@@ -80,9 +83,9 @@ const Header = () => {
                 <div className="py-1">
                   <div className="px-4 py-2 border-b border-gray-100">
                     <p className="text-sm font-medium text-gray-900">
-                      {user?.profile?.firstName} {user?.profile?.lastName}
+                      {mockUser?.profile?.firstName} {mockUser?.profile?.lastName}
                     </p>
-                    <p className="text-xs text-gray-500">{user?.email}</p>
+                    <p className="text-xs text-gray-500">{mockUser?.email}</p>
                   </div>
                   
                   <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2">

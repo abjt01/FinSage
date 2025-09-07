@@ -23,7 +23,7 @@ process.on('SIGINT', () => {
 const server = app.listen(PORT, () => {
   logger.info(`🚀 FinSage Backend running on port ${PORT}`)
   logger.info(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`)
-  
+
   if (process.env.NODE_ENV === 'development') {
     logger.info(`📊 Health check: http://localhost:${PORT}/health`)
     logger.info(`📚 API Base URL: http://localhost:${PORT}/api`)
@@ -33,7 +33,6 @@ const server = app.listen(PORT, () => {
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
   logger.error('Unhandled Promise Rejection:', err)
-  // Close server & exit process
   server.close(() => {
     process.exit(1)
   })
